@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block title %}
+    <title>Ljj的Blog</title>
+{% endblock %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="LJJ" />
+    <meta name="description" content="LJJ's blog">
+    <link rel="icon" type="image/png" href="{{url_for('static',filename='images/favicon.png')}}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Stylesheets & Fonts -->
+    <link href="{{url_for('static',filename='css/plugins.css')}}" rel="stylesheet">
+    <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">
+
+    <!-- BLOG FONT & STYLE -->
+    <link href="https://fonts.googleapis.com/css?family=Damion" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static',filename='blog/css/style-blog.css')}}"media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+
+<body>
+    <!-- Body Inner -->
+    <div class="body-inner">
+        {% include 'elements/header.html' %}
+        <!-- Page title -->
+        <section id="page-title">
+            <div class="container">
+                <div class="page-title">
+                    <h1>User login</h1>
+                    <span>User login page</span>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a href="#">Home</a>
+                        </li>
+                        <li><a href="#">Pages</a>
+                        </li>
+                        <li class="active"><a href="#">User login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- end: Page title -->
+        <!-- Section -->
+        <section>
+            <div class="container-fluid d-flex flex-column">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-lg-4 col-xl-3 mx-auto">
+                        <div class="mb-5 text-center">
+                            <h6 class="h3 mb-1">Login</h6>
+                            <p class="text-muted mb-0">Sign in to your account to continue.</p>
+                        </div><span class="clearfix"></span>
+                        <form id="form2" class="form-validate" action="{{ url_for('web.login') }}" method="post" novalidate>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                {% if form2.email.errors %}
+                                    <ul class="errors">
+                                        {% for error in form2.email.errors %}
+                                            <div role="alert" class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+                                                <strong><i class="fa fa-check-circle"></i> Warning!</strong>
+                                                {{error}}
+                                            </div>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="email" placeholder="Enter your email" required="">
+                                    <span class="input-group-text"><i class="icon-user"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="password">Password</label>
+                                <div class="input-group show-hide-password">
+                                    <input class="form-control" name="password" placeholder="Enter password" type="password" required="">
+                                    <span class="input-group-text"><i class="icon-eye-off" aria-hidden="true" style="cursor: pointer;"></i></span>
+                                </div>
+                            </div>
+                            <div class="mt-4"><button type="submit" class="btn btn-primary btn-block btn-primary">Sign in</button></div>
+                        </form>
+                        <div class="mt-4 text-center"><small>Not registered?</small> <a href="page-user-register.html" class="small fw-bold">Create account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end: Section -->
+        {% include 'elements/footer.html' %}
+    </div>
+    <!-- end: Body Inner -->
+    <!-- Scroll top -->
+    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+    <!--Plugins-->
+    <script src="js/jquery.js"></script>
+    <script src="js/plugins.js"></script>
+    <!--Template functions-->
+    <script src="js/functions.js"></script>
+</body>
+
+</html>
