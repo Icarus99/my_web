@@ -220,12 +220,11 @@
     {% include 'elements/footer.html' %}
     </div>
     <!-- end: Body Inner -->
-
-    <!--Plugins-->
-    <script src="js/jquery.js"></script>
-    <script src="js/plugins.js"></script>
-    <!--Template functions-->
-    <script src="js/functions.js"></script>
 </body>
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/functions.js') }}"></script>
+{% endblock %}
 
 </html>

@@ -2,6 +2,7 @@ from wtforms import Form, StringField, IntegerField, PasswordField
 from wtforms.validators import EqualTo, Length, NumberRange, DataRequired, Email, ValidationError
 
 from app.models.user import User
+from app.models.wxInfo import wxInfo
 
 
 class RegisterForm(Form):
@@ -35,6 +36,33 @@ class LoginForm(Form):
 
     password = PasswordField(validators=[
         DataRequired(), Length(6, 32, message='Password must has at least 6 characters and no longer than 32 characters')])
+
+class wxRegisterForm(Form):
+    email = StringField(validators=[DataRequired(), Length(8, 64, message='Email length must longer than 8 and shorter than 64 characters'),
+                                    Email(message='Not a valid email')])
+
+    password = PasswordField(validators=[
+        DataRequired(), Length(6, 32, message='Password must has at least 6 characters and no longer than 32 characters')])
+
+    nickname = StringField(validators=[
+        DataRequired(), Length(2, 10, message='nickname length must longer than 2 and shorter than 10 characters')])
+
+    code = StringField()
+
+    key = StringField()
+
+    def validate_email(self, field):
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('电子邮件已被注册')
+
+    def validate_nickname(self, field):
+        if User.query.filter_by(nickname=field.data).first():
+            raise ValidationError('昵称已存在')
+
+
+
+
+
 
 
 class EmailForm(Form):
