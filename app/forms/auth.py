@@ -47,9 +47,9 @@ class wxRegisterForm(Form):
     nickname = StringField(validators=[
         DataRequired(), Length(2, 10, message='nickname length must longer than 2 and shorter than 10 characters')])
 
-    code = StringField()
-
     key = StringField()
+
+    avatar = StringField()
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():

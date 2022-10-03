@@ -17,6 +17,8 @@ class User(UserMixin, Base):
     receive_counter = Column(Integer, default=0)
     wx_open_id = Column(String(50))
     wx_name = Column(String(32))
+    partner_id = Column(Integer)
+    avatar = Column(String(128))
 
     @property
     def password(self):

@@ -2,12 +2,13 @@ import base64
 from Crypto.Cipher import AES
 from Crypto import Random
 from Crypto.Protocol.KDF import PBKDF2
+from flask import current_app
 
 class Crypto(object):
 
-    def __init__(self, code):
+    def __init__(self):
         self.block_size = 16
-        self.code = code
+        self.code = current_app.config['APPSECRET']
 
     def pad(self, s):
         return s + (self.block_size - len(s) % self.block_size) * chr(self.block_size - len(s) % self.block_size)
@@ -28,13 +29,11 @@ class Crypto(object):
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(private_key, AES.MODE_CBC, iv)
         r = base64.b64encode(iv + cipher.encrypt(raw.encode("UTF-8"))).decode('utf-8')
-        print(r)
         return r
 
 
     def decrypt(self, enc):
         # enc = self.pad(enc)
-        print(enc)
         private_key = self.get_private_key()
         enc = base64.b64decode(enc)
         iv = enc[:16]
