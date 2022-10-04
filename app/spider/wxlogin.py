@@ -8,11 +8,11 @@ from app.models.wxInfo import wxInfo
 class WXLogin:
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid={}&secret={}&js_code={}&grant_type=authorization_code'
 
-    def __init__(self, code='', signature=''):
+    def __init__(self, code='', signature='', openid=''):
         self.code = code
         self.appid = current_app.config['APPID']
         self.secret = current_app.config['APPSECRET']
-        self.openid = ''
+        self.openid = openid
         self.session_key = ''
         self.signature = signature
 
@@ -25,7 +25,7 @@ class WXLogin:
         else:
             url = self.url.format(self.appid, self.secret, self.code)
             result = HTTP.get(url)
-            print(result)
+            # print(result)
             self.fill_requested_data(result)
 
     def fill_requested_data(self, data):
@@ -49,3 +49,10 @@ class WXLogin:
             # db.session.commit()
 
         return wxinfo
+
+    def check_partner(self):
+        user = User.query.filter_by(openid= self.openid).first()
+        if(user):
+            print(user['partner_id'])
+        else:
+            print("not found")
